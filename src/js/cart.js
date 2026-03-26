@@ -47,7 +47,10 @@ function renderCartContents() {
   container.innerHTML = cartItems.map(cartItemTemplate).join("");
 
   // Add grand total at the bottom
-  const grandTotal = cartItems.reduce((sum, item) => sum + (item.FinalPrice * (item.Quantity || 1)), 0);
+  const grandTotal = cartItems.reduce(
+    (sum, item) => sum + item.FinalPrice * (item.Quantity || 1),
+    0,
+  );
   const totalEl = document.createElement("li");
   totalEl.className = "cart-grand-total";
   totalEl.innerHTML = `<h3>Grand Total: $${grandTotal.toFixed(2)}</h3>`;
@@ -72,7 +75,7 @@ function attachQuantityListeners() {
       let newQty = parseInt(input.value);
       if (isNaN(newQty) || newQty < 0) newQty = 0;
 
-      const product = cart.find(p => p.Id === id);
+      const product = cart.find((p) => p.Id === id);
       if (product) {
         if (newQty === 0) {
           // Remove item if quantity is 0
